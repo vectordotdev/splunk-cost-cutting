@@ -1,8 +1,8 @@
-[sources.in]
-type = "stdin"
+[sources.internal_metrics]
+type = "internal_metrics"
 
 [sinks.out]
-type = "file"
-inputs = ["in"]
-path = "vector-%Y-%m-%d.log"
-encoding.code = "ndjson"
+type = "prometheus"
+inputs = ["internal_metrics"]
+address = "0.0.0.0:9090"
+namespace = "logs"
