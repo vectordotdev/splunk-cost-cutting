@@ -4,5 +4,5 @@ type = "internal_metrics"
 [sinks.out]
 type = "prometheus"
 inputs = ["internal_metrics"]
-address = "0.0.0.0:9090"
+address = "0.0.0.0:1111"
 namespace = "logs"
