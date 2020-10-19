@@ -1,0 +1,15 @@
+version: "3.8"
+services:
+  prometheus:
+    image: prom/prometheus:v2.22.0
+    volumes:
+    - ./prometheus:/etc/prometheus:ro
+    command:
+    - --config.file=/etc/prometheus/prometheus.yml
+  vector:
+    image: timberio/vector:0.10.0-alpine
+    volumes:
+    - ./vector:/etc/vector:ro
+    command:
+    - --config
+    - /etc/vector/vector.toml

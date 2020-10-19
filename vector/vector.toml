@@ -1,0 +1,8 @@
+[sources.in]
+type = "stdin"
+
+[sinks.out]
+type = "file"
+inputs = ["in"]
+path = "vector-%Y-%m-%d.log"
+encoding.code = "ndjson"
