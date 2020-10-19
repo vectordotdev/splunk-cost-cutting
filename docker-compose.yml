@@ -1,5 +1,8 @@
 version: "3.8"
 services:
+  logs:
+    build:
+      context: logs
   prometheus:
     image: prom/prometheus:v2.22.0
     volumes:
