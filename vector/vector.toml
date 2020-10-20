@@ -1,7 +1,17 @@
+[sources.logs]
+type = "docker"
+include_images = ["flog"]
+
 [sources.internal_metrics]
 type = "internal_metrics"
 
-[sinks.out]
+[sinks.console]
+type = "console"
+inputs = ["logs"]
+target = "stdout"
+encoding.codec = "json"
+
+[sinks.prometheus]
 type = "prometheus"
 inputs = ["internal_metrics"]
 address = "0.0.0.0:1111"

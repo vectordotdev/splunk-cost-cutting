@@ -1,8 +1,11 @@
 version: "3.8"
 services:
-  logs:
-    build:
-      context: logs
+  flog:
+    image: mingrammer/flog:latest
+    command:
+    - flog
+    volumes:
+    - /var/run/docker.sock:/var/run/docker.sock
   prometheus:
     image: prom/prometheus:v2.22.0
     ports:
@@ -11,10 +14,14 @@ services:
     - ./prometheus:/etc/prometheus:ro
     command:
     - --config.file=/etc/prometheus/prometheus.yml
+    depends_on:
+    - vector
   vector:
-    image: timberio/vector:0.10.0-alpine
+    image: timberio/vector:nightly-alpine
     volumes:
     - ./vector:/etc/vector:ro
     command:
     - --config
     - /etc/vector/vector.toml
+    depends_on:
+    - flog
