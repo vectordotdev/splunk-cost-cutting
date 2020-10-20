@@ -1,15 +1,10 @@
 version: "3.8"
 services:
-  prometheus:
-    image: prom/prometheus:v2.22.0
-    ports:
-    - 9090:9090
+  flog:
+    image: mingrammer/flog:0.4.3
+    command: ["flog", "--loop", "--delay", "1s"]
     volumes:
-    - ./prometheus:/etc/prometheus:ro
-    command:
-    - --config.file=/etc/prometheus/prometheus.yml
-    depends_on:
-    - vector
+    - /var/run/docker.sock:/var/run/docker.sock
   vector:
     image: timberio/vector:nightly-alpine
     volumes:
@@ -20,3 +15,13 @@ services:
     - /etc/vector/vector.toml
     depends_on:
     - flog
+  prometheus:
+    image: prom/prometheus:v2.22.0
+    ports:
+    - 9090:9090
+    volumes:
+    - ./prometheus:/etc/prometheus:ro
+    command:
+    - --config.file=/etc/prometheus/prometheus.yml
+    depends_on:
+    - vector

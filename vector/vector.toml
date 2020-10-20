@@ -1,6 +1,6 @@
-[sources.generator]
-type = "generator"
-lines = ["apple", "orange", "banana"]
+[sources.logs]
+type = "docker"
+include_containers = ["splunk-cost-cutting_flog_1"]
 
 [sources.internal_metrics]
 type = "internal_metrics"
@@ -10,7 +10,7 @@ type = "host_metrics"
 
 [sinks.console]
 type = "console"
-inputs = ["generator"]
+inputs = ["logs"]
 target = "stdout"
 encoding.codec = "text"
 
