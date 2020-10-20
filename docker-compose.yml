@@ -1,11 +1,5 @@
 version: "3.8"
 services:
-  flog:
-    image: mingrammer/flog:latest
-    command:
-    - flog
-    volumes:
-    - /var/run/docker.sock:/var/run/docker.sock
   prometheus:
     image: prom/prometheus:v2.22.0
     ports:
@@ -20,6 +14,7 @@ services:
     image: timberio/vector:nightly-alpine
     volumes:
     - ./vector:/etc/vector:ro
+    - /var/run/docker.sock:/var/run/docker.sock
     command:
     - --config
     - /etc/vector/vector.toml

@@ -1,18 +1,20 @@
-[sources.logs]
-type = "docker"
-include_images = ["flog"]
+[sources.generator]
+type = "generator"
+lines = ["apple", "orange", "banana"]
 
 [sources.internal_metrics]
 type = "internal_metrics"
 
+[sources.host_metrics]
+type = "host_metrics"
+
 [sinks.console]
 type = "console"
-inputs = ["logs"]
+inputs = ["generator"]
 target = "stdout"
-encoding.codec = "json"
+encoding.codec = "text"
 
 [sinks.prometheus]
 type = "prometheus"
-inputs = ["internal_metrics"]
+inputs = ["internal_metrics", "host_metrics"]
 address = "0.0.0.0:1111"
-namespace = "logs"
