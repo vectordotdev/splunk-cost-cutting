@@ -1,0 +1,26 @@
+[sources.logs]
+type = "docker"
+include_containers = ["flog"]
+
+[sources.internal_metrics]
+type = "internal_metrics"
+
+[sources.host_metrics]
+type = "host_metrics"
+
+[transforms.remove_fields]
+type = "remove_fields"
+inputs = ["logs"] 
+fields = ["datetime", "method", "request", "status", "bytes"]
+drop_empty = true
+
+[sinks.console]
+type = "console"
+inputs = ["remove_fields"]
+target = "stdout"
+encoding.codec = "text"
+
+[sinks.prometheus]
+type = "prometheus"
+inputs = ["internal_metrics", "host_metrics"]
+address = "0.0.0.0:1111"
