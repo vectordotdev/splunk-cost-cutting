@@ -2,7 +2,7 @@ version: "3.8"
 services:
   flog:
     image: mingrammer/flog:0.4.3
-    command: ["flog", "--loop", "--delay", "1s"]
+    command: ["flog", "--loop", "--delay", "100ms"]
     volumes:
     - /var/run/docker.sock:/var/run/docker.sock
   vector:
