@@ -1,6 +1,6 @@
 [sources.logs]
 type = "docker"
-include_containers = ["splunk-cost-cutting_flog_1"]
+include_containers = ["flog"]
 
 [sources.internal_metrics]
 type = "internal_metrics"

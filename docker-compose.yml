@@ -2,26 +2,48 @@ version: "3.8"
 services:
   flog:
     image: mingrammer/flog:0.4.3
+    container_name: flog
     command: ["flog", "--loop", "--delay", "100ms"]
     volumes:
     - /var/run/docker.sock:/var/run/docker.sock
+    restart: always
   vector:
     image: timberio/vector:nightly-alpine
+    container_name: vector
     volumes:
     - ./vector:/etc/vector:ro
     - /var/run/docker.sock:/var/run/docker.sock
     command:
     - --config
     - /etc/vector/vector.toml
+    restart: always
     depends_on:
     - flog
   prometheus:
     image: prom/prometheus:v2.22.0
+    container_name: prometheus
     ports:
     - 9090:9090
     volumes:
     - ./prometheus:/etc/prometheus:ro
     command:
     - --config.file=/etc/prometheus/prometheus.yml
+    restart: always
     depends_on:
     - vector
+  grafana:
+    image: grafana/grafana:7.2.1
+    container_name: grafana
+    ports:
+    - 3000:3000
+    volumes:
+    - grafana_data:/var/lib/grafana
+    - ./grafana/provisioning:/etc/grafana/provisioning
+    env_file:
+    - ./grafana/config.monitoring
+    user: "472"
+    restart: always
+    depends_on:
+    - prometheus
+volumes:
+  grafana_data: {}
