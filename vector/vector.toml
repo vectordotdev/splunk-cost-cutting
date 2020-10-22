@@ -1,3 +1,7 @@
+# GraphQL Playground
+#[api]
+#enabled = true
+
 # Prometheus metrics
 [sources.internal_metrics]
 type = "internal_metrics"
@@ -15,17 +19,7 @@ address = "0.0.0.0:1111"
 type = "docker"
 include_containers = ["flog"]
 
-[transforms.json]
-type = "json_parser"
+[sinks.blackhole]
+type = "blackhole"
 inputs = ["logs"]
-
-[transforms.trim]
-type = "remove_fields"
-inputs = ["json"]
-fields = ["container_created_at", "container_id", "container_name", "image", "label", "source_type", "stream"]
-
-[sinks.console]
-type = "console"
-inputs = ["trim"]
-target = "stdout"
-encoding.codec = "json"
+print_amount = 10000

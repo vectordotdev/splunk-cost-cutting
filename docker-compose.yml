@@ -3,31 +3,21 @@ services:
   flog:
     image: mingrammer/flog:0.4.3
     container_name: flog
-    command: ["flog", "--loop", "--format", "json"]
+    command: ["flog", "--format", "json", "--loop"]
     volumes:
     - /var/run/docker.sock:/var/run/docker.sock
     restart: always
-  vector_raw:
+  vector:
     image: timberio/vector:nightly-alpine
-    container_name: vector_raw
+    container_name: vector
+    ports:
+    - 8686:8686
     volumes:
     - ./vector:/etc/vector:ro
     - /var/run/docker.sock:/var/run/docker.sock
     command:
     - --config
-    - /etc/vector/vector-raw.toml
-    restart: always
-    depends_on:
-    - flog
-  vector_transformed:
-    image: timberio/vector:nightly-alpine
-    container_name: vector_transformed
-    volumes:
-    - ./vector:/etc/vector:ro
-    - /var/run/docker.sock:/var/run/docker.sock
-    command:
-    - --config
-    - /etc/vector/vector-transformed.toml
+    - /etc/vector/vector.toml
     restart: always
     depends_on:
     - flog
@@ -44,8 +34,7 @@ services:
     - --storage.tsdb.path=/prometheus
     restart: always
     depends_on:
-    - vector_raw
-    - vector_transformed
+    - vector
   grafana:
     image: grafana/grafana:7.2.1
     container_name: grafana
