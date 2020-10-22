@@ -3,7 +3,7 @@ services:
   flog:
     image: mingrammer/flog:0.4.3
     container_name: flog
-    command: ["flog", "--loop", "--delay", "100ms", "--format", "json"]
+    command: ["flog", "--loop", "--format", "json"]
     volumes:
     - /var/run/docker.sock:/var/run/docker.sock
     restart: always
