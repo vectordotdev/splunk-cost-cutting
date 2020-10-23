@@ -5,8 +5,8 @@ This repo houses example code for [Splunk] cost cutting scenarios.
 ## Running the demo
 
 ```bash
+docker-compose pull
 docker-compose up --detach
-
 # If you omit --detach, the log output is extremely noisy
 ```
 

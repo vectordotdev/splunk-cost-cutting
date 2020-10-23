@@ -19,7 +19,38 @@ address = "0.0.0.0:1111"
 type = "docker"
 include_containers = ["flog"]
 
-[sinks.blackhole]
-type = "blackhole"
+[transforms.json]
+type = "json_parser"
 inputs = ["logs"]
+
+[transforms.trim]
+type = "remove_fields"
+inputs = ["json"]
+fields = ["container_created_at", "container_id", "container_name", "image", "label", "stream", "timestamp"]
+drop_empty = true
+
+[transforms.strip]
+type = "remove_fields"
+inputs = ["trim"]
+fields = ["method", "protocol", "request"]
+drop_empty = true
+
+[transforms.sample]
+type = "sampler"
+inputs = ["trim"]
+rate = 10
+
+[sinks.raw]
+type = "blackhole"
+inputs = ["trim"]
+print_amount = 10000
+
+[sinks.trimmed]
+type = "blackhole"
+inputs = ["strip"]
+print_amount = 10000
+
+[sinks.sampled]
+type = "blackhole"
+inputs = ["sample"]
 print_amount = 10000
