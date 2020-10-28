@@ -1,6 +1,7 @@
 # GraphQL Playground
-#[api]
-#enabled = true
+[api]
+enabled = true
+bind = "0.0.0.0:8686"
 
 # Prometheus metrics
 [sources.internal_metrics]
