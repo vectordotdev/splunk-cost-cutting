@@ -24,7 +24,7 @@
       "dashLength": 10,
       "dashes": false,
       "datasource": "Prometheus",
-      "description": "",
+      "description": "A Prometheus instance running on Docker Compose and scraping from Vector",
       "fieldConfig": {
         "defaults": {
           "custom": {}
@@ -67,7 +67,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "rate(bytes_processed[1m])",
+          "expr": "rate(processed_bytes_total{component_kind=\"sink\"}[10s])",
           "interval": "",
           "legendFormat": "",
           "refId": "A"
@@ -77,7 +77,8 @@
       "timeFrom": null,
       "timeRegions": [],
       "timeShift": null,
-      "title": "Raw vs. transformed log stream",
+      "title": "Raw vs. trimmed log stream",
+      "description": "A raw Apache Common log stream vs. the same stream with the `method`, `protocol`, and `request` fields omitted",
       "tooltip": {
         "shared": true,
         "sort": 0,
