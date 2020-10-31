@@ -4,4 +4,4 @@ global:
 scrape_configs:
 - job_name: 'vector'
   static_configs:
-  - targets: ['vector:1111']
+  - targets: ['vector:9598']

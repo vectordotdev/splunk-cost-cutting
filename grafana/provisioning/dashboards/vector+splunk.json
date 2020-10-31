@@ -67,10 +67,16 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "rate(processed_bytes_total{component_kind=\"sink\"}[10s])",
+          "expr": "rate(processed_bytes_total{component_name=\"raw\"}[10s])",
           "interval": "",
-          "legendFormat": "",
-          "refId": "A"
+          "legendFormat": "Raw log stream",
+          "refId": "raw"
+        },
+	{
+          "expr": "rate(processed_bytes_total{component_name=\"trimmed\"}[10s]",
+          "interval": "",
+          "legendFormat": "Trimmed log stream",
+          "refId": "trimmed"
         }
       ],
       "thresholds": [],
@@ -98,7 +104,7 @@
           "label": null,
           "logBase": 1,
           "max": null,
-          "min": null,
+          "min": 0,
           "show": true
         },
         {
