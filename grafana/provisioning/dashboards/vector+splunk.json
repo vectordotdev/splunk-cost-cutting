@@ -15,7 +15,6 @@
   "editable": true,
   "gnetId": null,
   "graphTooltip": 0,
-  "id": 3,
   "links": [],
   "panels": [
     {
@@ -24,7 +23,7 @@
       "dashLength": 10,
       "dashes": false,
       "datasource": "Prometheus",
-      "description": "A Prometheus instance running on Docker Compose and scraping from Vector",
+      "description": "A raw Apache Common log stream vs. the same stream with the `method`, `protocol`, and `request` fields omitted",
       "fieldConfig": {
         "defaults": {
           "custom": {}
@@ -72,7 +71,7 @@
           "legendFormat": "Raw log stream",
           "refId": "raw"
         },
-	{
+        {
           "expr": "rate(processed_bytes_total{component_name=\"trimmed\"}[10s])",
           "interval": "",
           "legendFormat": "Trimmed log stream",
@@ -84,7 +83,6 @@
       "timeRegions": [],
       "timeShift": null,
       "title": "Raw vs. trimmed log stream",
-      "description": "A raw Apache Common log stream vs. the same stream with the `method`, `protocol`, and `request` fields omitted",
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -100,6 +98,7 @@
       },
       "yaxes": [
         {
+          "$$hashKey": "object:150",
           "format": "short",
           "label": null,
           "logBase": 1,
@@ -108,6 +107,111 @@
           "show": true
         },
         {
+          "$$hashKey": "object:151",
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": null,
+      "description": "Event processing rate for raw vs. trimmed. Note that event processing throughput is virtually identical.",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
+      "fill": 1,
+      "fillGradient": 0,
+      "gridPos": {
+        "h": 9,
+        "w": 12,
+        "x": 12,
+        "y": 0
+      },
+      "hiddenSeries": false,
+      "id": 4,
+      "legend": {
+        "avg": false,
+        "current": false,
+        "max": false,
+        "min": false,
+        "show": true,
+        "total": false,
+        "values": false
+      },
+      "lines": true,
+      "linewidth": 1,
+      "nullPointMode": "null",
+      "options": {
+        "alertThreshold": true
+      },
+      "percentage": false,
+      "pluginVersion": "7.2.1",
+      "pointradius": 2,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "expr": "rate(events_processed_total{component_name=\"raw\"}[10s])",
+          "interval": "",
+          "legendFormat": "Raw log stream",
+          "refId": "A"
+        },
+        {
+          "expr": "rate(events_processed_total{component_name=\"trimmed\"}[10s])",
+          "interval": "",
+          "legendFormat": "Trimmed log stream",
+          "refId": "B"
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "Event processing throughput",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "$$hashKey": "object:46",
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": "0",
+          "show": true
+        },
+        {
+          "$$hashKey": "object:47",
           "format": "short",
           "label": null,
           "logBase": 1,
@@ -137,5 +241,5 @@
   "timezone": "",
   "title": "Vector + Splunk",
   "uid": "5AEnJvpGz",
-  "version": 4
+  "version": 5
 }
