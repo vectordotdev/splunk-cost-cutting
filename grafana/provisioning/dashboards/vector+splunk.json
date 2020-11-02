@@ -73,7 +73,7 @@
           "refId": "raw"
         },
 	{
-          "expr": "rate(processed_bytes_total{component_name=\"trimmed\"}[10s]",
+          "expr": "rate(processed_bytes_total{component_name=\"trimmed\"}[10s])",
           "interval": "",
           "legendFormat": "Trimmed log stream",
           "refId": "trimmed"
