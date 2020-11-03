@@ -76,13 +76,19 @@
           "interval": "",
           "legendFormat": "Trimmed log stream",
           "refId": "trimmed"
-        }
+        },
+	{
+	  "expr": "rate(processed_bytes_total{component_name=\"sampled\"}[10s])",
+	  "interval": "",
+	  "legendFormat": "Sampled log stream (1/10)",
+	  "refId": "sampled"
+	}
       ],
       "thresholds": [],
       "timeFrom": null,
       "timeRegions": [],
       "timeShift": null,
-      "title": "Raw vs. trimmed log stream",
+      "title": "Raw vs. trimmed vs. sampled log stream (last 10s)",
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -186,7 +192,7 @@
       "timeFrom": null,
       "timeRegions": [],
       "timeShift": null,
-      "title": "Event processing throughput",
+      "title": "Event processing throughput (last 10s)",
       "tooltip": {
         "shared": true,
         "sort": 0,

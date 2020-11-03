@@ -36,6 +36,11 @@ inputs = ["trim"]
 fields = ["method", "protocol", "request"]
 drop_empty = true
 
+[transforms.sample]
+type = "sampler"
+inputs = ["trim"]
+rate = 10
+
 [sinks.raw]
 type = "blackhole"
 inputs = ["trim"]
@@ -44,4 +49,9 @@ print_amount = 10000
 [sinks.trimmed]
 type = "blackhole"
 inputs = ["strip"]
+print_amount = 10000
+
+[sinks.sampled]
+type = "blackhole"
+inputs = ["sample"]
 print_amount = 10000
