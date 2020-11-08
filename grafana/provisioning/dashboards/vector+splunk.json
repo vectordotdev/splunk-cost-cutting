@@ -66,23 +66,23 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "rate(processed_bytes_total{component_name=\"raw\"}[10s])",
+          "expr": "rate(vector_processed_bytes_total{component_name=\"raw\"}[10s])",
           "interval": "",
           "legendFormat": "Raw log stream",
           "refId": "raw"
         },
         {
-          "expr": "rate(processed_bytes_total{component_name=\"trimmed\"}[10s])",
+          "expr": "rate(vector_processed_bytes_total{component_name=\"trimmed\"}[10s])",
           "interval": "",
           "legendFormat": "Trimmed log stream",
           "refId": "trimmed"
         },
-	{
-	  "expr": "rate(processed_bytes_total{component_name=\"sampled\"}[10s])",
-	  "interval": "",
-	  "legendFormat": "Sampled log stream (1/10)",
-	  "refId": "sampled"
-	}
+        {
+          "expr": "rate(vector_processed_bytes_total{component_name=\"sampled\"}[10s])",
+          "interval": "",
+          "legendFormat": "Sampled log stream (1/10)",
+          "refId": "sampled"
+        }
       ],
       "thresholds": [],
       "timeFrom": null,
@@ -176,16 +176,22 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "rate(events_processed_total{component_name=\"raw\"}[10s])",
+          "expr": "rate(vector_events_processed_total{component_name=\"raw\"}[10s])",
           "interval": "",
           "legendFormat": "Raw log stream",
-          "refId": "A"
+          "refId": "Raw"
         },
         {
-          "expr": "rate(events_processed_total{component_name=\"trimmed\"}[10s])",
+          "expr": "rate(vector_events_processed_total{component_name=\"trimmed\"}[10s])",
           "interval": "",
           "legendFormat": "Trimmed log stream",
-          "refId": "B"
+          "refId": "Trimed"
+        },
+        {
+          "expr": "rate(vector_events_processed_total{component_name=\"sampled\"}[10s])",
+          "interval": "",
+          "legendFormat": "Sampled log stream",
+          "refId": "Sampled"
         }
       ],
       "thresholds": [],
