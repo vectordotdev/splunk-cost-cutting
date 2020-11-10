@@ -3,19 +3,25 @@
 enabled = true
 bind = "0.0.0.0:8686"
 
-# Prometheus metrics
+# Vector metrics
 [sources.internal_metrics]
 type = "internal_metrics"
 
+# Underlying host metrics
 [sources.host_metrics]
 type = "host_metrics"
 
+# Expose Vector and host metrics to Prometheus
 [sinks.prometheus]
 type = "prometheus"
 inputs = ["internal_metrics", "host_metrics"]
 address = "0.0.0.0:9598"
 
+#
 # Log pipeline
+#
+
+# Ingest randomly generated logs
 [sources.logs]
 type = "docker"
 include_containers = ["flog"]
@@ -39,7 +45,8 @@ drop_empty = true
 [transforms.sample]
 type = "sampler"
 inputs = ["trim"]
-rate = 10
+key_field = "user-identifier"
+rate = 5
 
 [sinks.raw]
 type = "blackhole"
