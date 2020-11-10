@@ -55,3 +55,11 @@ print_amount = 10000
 type = "blackhole"
 inputs = ["sample"]
 print_amount = 10000
+
+[sinks.splunk]
+type = "splunk_hec"
+inputs = ["trim", "strip", "sample"]
+healthcheck = true
+host = "http://splunk:8000"
+token = "nothing"
+encoding.codec = "json"

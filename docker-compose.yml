@@ -21,6 +21,7 @@ services:
     restart: always
     depends_on:
     - flog
+    - splunk
   prometheus:
     image: prom/prometheus:v2.22.0
     container_name: prometheus
@@ -49,6 +50,14 @@ services:
     restart: always
     depends_on:
     - prometheus
+  splunk:
+    image: splunk/splunk:8.0
+    container_name: splunk
+    ports:
+    - 8000:8000
+    environment:
+      SPLUNK_START_ARGS: "--accept-license"
+      SPLUNK_PASSWORD: "vector12345"
 volumes:
   prometheus_data: {}
   grafana_data: {}
