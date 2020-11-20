@@ -3,19 +3,19 @@
 enabled = true
 bind = "0.0.0.0:8686"
 
-# Vector metrics
-[sources.internal_metrics]
-type = "internal_metrics"
-
 # Underlying host metrics
 [sources.host_metrics]
 type = "host_metrics"
 
+# Vector internal metrics
+[sources.internal_metrics]
+type = "internal_metrics"
+
 # Expose Vector and host metrics to Prometheus
 [sinks.prometheus]
 type = "prometheus"
-inputs = ["internal_metrics", "host_metrics"]
-address = "0.0.0.0:9598"
+inputs = ["host_metrics", "internal_metrics"]
+address = "0.0.0.0:9090"
 
 #
 # Log pipeline
