@@ -1,7 +1,7 @@
 # GraphQL Playground
 [api]
 enabled = true
-bind = "0.0.0.0:8686"
+address = "0.0.0.0:8686"
 
 # Underlying host metrics
 [sources.host_metrics]
@@ -30,10 +30,15 @@ include_containers = ["flog"]
 type = "json_parser"
 inputs = ["logs"]
 
-[transforms.trim]
+[transforms.remove_container_metadata]
 type = "remove_fields"
 inputs = ["json"]
-fields = ["container_created_at", "container_id", "container_name", "image", "label", "stream", "timestamp"]
+fields = ["container_created_at", "container_id", "container_name"]
+
+[transforms.trim]
+type = "remove_fields"
+inputs = ["remove_container_metadata"]
+fields = ["image", "label", "stream", "timestamp"]
 drop_empty = true
 
 [transforms.strip]
