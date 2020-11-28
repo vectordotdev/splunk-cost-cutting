@@ -53,6 +53,14 @@ inputs = ["trim"]
 key_field = "user-identifier"
 rate = 5
 
+[sinks.splunk]
+type = "splunk_hec"
+inputs = ["trim", "strip", "sample"]
+host = "http://splunk:8088"
+healthcheck = true
+token = "${SPLUNK_HEC_TOKEN}"
+encoding.codec = "json"
+
 [sinks.raw]
 type = "blackhole"
 inputs = ["trim"]

@@ -18,9 +18,21 @@ services:
     command:
     - --config
     - /etc/vector/vector.toml
+    environment:
+      SPLUNK_HEC_TOKEN: "abcd1234"
     restart: always
     depends_on:
     - flog
+    - splunk
+  splunk:
+    image: timberio/splunk-hec-test:minus_compose
+    container_name: splunk
+    ports:
+    - 8000:8000
+    volumes:
+    - ./splunk:/tmp/defaults
+    environment:
+      SPLUNK_START_ARGS: --accept-license
   prometheus:
     image: prom/prometheus:v2.22.0
     container_name: prometheus
