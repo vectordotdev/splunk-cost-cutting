@@ -1,12 +1,5 @@
 version: "3.8"
 services:
-  flog:
-    image: mingrammer/flog:0.4.3
-    container_name: flog
-    command: ["flog", "--format", "json", "--loop"]
-    volumes:
-    - /var/run/docker.sock:/var/run/docker.sock
-    restart: always
   vector:
     image: timberio/vector:nightly-alpine
     container_name: vector
@@ -21,18 +14,6 @@ services:
     environment:
       SPLUNK_HEC_TOKEN: "abcd1234"
     restart: always
-    depends_on:
-    - flog
-    - splunk
-  splunk:
-    image: timberio/splunk-hec-test:minus_compose
-    container_name: splunk
-    ports:
-    - 8000:8000
-    volumes:
-    - ./splunk:/tmp/defaults
-    environment:
-      SPLUNK_START_ARGS: --accept-license
   prometheus:
     image: prom/prometheus:v2.22.0
     container_name: prometheus

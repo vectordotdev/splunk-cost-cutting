@@ -23,43 +23,50 @@ address = "0.0.0.0:9090"
 
 # Ingest randomly generated logs
 [sources.logs]
-type = "docker"
-include_containers = ["flog"]
+type = "generator"
+format = "syslog"
 
-[transforms.json]
-type = "json_parser"
+[transforms.parse]
+type = "remap"
 inputs = ["logs"]
+source = '''
+. = parse_syslog!(.message)
+. = encode_json(.)
+'''
 
 [transforms.remove_container_metadata]
-type = "remove_fields"
-inputs = ["json"]
-fields = ["container_created_at", "container_id", "container_name"]
+type = "remap"
+inputs = ["parse"]
+source = '''
+del(.container_created_at)
+del(.container_id)
+del(.container_name)
+'''
 
 [transforms.trim]
-type = "remove_fields"
+type = "remap"
 inputs = ["remove_container_metadata"]
-fields = ["image", "label", "stream", "timestamp"]
-drop_empty = true
+source = '''
+del(.image)
+del(.label)
+del(.stream)
+del(.timestamp)
+'''
 
 [transforms.strip]
-type = "remove_fields"
+type = "remap"
 inputs = ["trim"]
-fields = ["method", "protocol", "request"]
-drop_empty = true
+source = '''
+del(.method)
+del(.protocol)
+del(.request)
+'''
 
 [transforms.sample]
 type = "sampler"
 inputs = ["trim"]
 key_field = "user-identifier"
 rate = 5
-
-[sinks.splunk]
-type = "splunk_hec"
-inputs = ["trim", "strip", "sample"]
-host = "http://splunk:8088"
-healthcheck = true
-token = "${SPLUNK_HEC_TOKEN}"
-encoding.codec = "json"
 
 [sinks.raw]
 type = "blackhole"
